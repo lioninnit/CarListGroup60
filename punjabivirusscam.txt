@@ -1,0 +1,90 @@
+```//Exercise 3 : Calculate the size of the linked list.
+//2 ways
+//1. Use a function to calculate the size.
+//2. You can use the global size variable to keep track of the size.
+
+#include <iostream>
+using namespace std;
+
+struct car
+{
+    int carID; //data
+    string carBrand;
+    string carType;
+    string carColor;
+    int year;
+    car* nextaddress; //pointer
+};
+
+car* createNewNode(int carID, string carBrand, string carColor, string carType, int year)
+{
+    //Create structure in the heap location
+    car* newnode = new car;
+
+    //Assign the data into the node
+    newnode->carID = carID;
+    newnode->carBrand = carBrand;
+    newnode->carColor = carColor;
+    newnode->carType = carType;
+    newnode->year = year;
+    newnode->nextaddress = NULL; //Always start with NULL first in newnode
+
+    return newnode; //Return back the new created  node to the other function
+}
+
+void displayLinkedListItem(car* head)
+{
+    car* current = head;
+    while (current != NULL) //Is it the end of the list?
+    {
+        cout << current->carBrand << " - ";
+        cout << current->year << " - ";
+        cout << current->carID << " - ";
+        cout << current->carColor << " - ";
+        cout << current->carType << endl;
+        current = current->nextaddress; //Move until the end
+    }
+    cout << "List is ended here!" << endl << endl;
+}
+
+car* InsertToFrontOfList(car* head, int carID, string carBrand, string carColor, string carType, int year)
+{
+    car* newnode = createNewNode(carID, carBrand, carColor, carType, year);
+
+    //add to the list
+    if (head == NULL)
+    {
+        head = newnode;
+    }
+    else //List not empty
+    {
+        newnode->nextaddress = head;
+        head = newnode;
+    }
+    return head;
+}
+
+int sizeOfLinkedList(car* head)
+{
+    int i = 0;
+    car* current = head;
+    while (current != NULL)
+    {
+        i++;
+        current = current->nextaddress;
+    }
+    return i;
+}
+
+int main()
+{
+    car* head = NULL;
+
+    head = InsertToFrontOfList(head, 1234, "Toyota", "Red", "Vios", 2000);
+    head = InsertToFrontOfList(head, 2255, "Proton", "Blue", "X70", 2020);
+    head = InsertToFrontOfList(head, 7799, "Perodua", "Yellow", "Arus", 2022);
+
+    displayLinkedListItem(head);
+    cout << "The size of this linked list = " << sizeOfLinkedList(head) << endl;
+    return 0;
+}```
